@@ -1,11 +1,5 @@
 local M = {}
 
-M.opts = {
-    leader = ',',
-    -- functions to use
-    use = {}
-}
-
 local opts = { silent = true, noremap = true }
 
 vim.opt.timeoutlen = 200
@@ -14,7 +8,7 @@ M.leader = function ()
     vim.g.mapleader = ','
 end
 
-M.opts.use.qol = function ()
+M.qol = function ()
     vim.keymap.set('n', '<Leader>o', 'o<ESC>', opts)
     vim.keymap.set('n', '<Leader>O', 'O<ESC>', opts)
 
@@ -22,7 +16,7 @@ M.opts.use.qol = function ()
     vim.keymap.set('n', '<Leader>gen', 'ggVGgq', opts)
 end
 
-M.opts.use.lsp = function ()
+M.lsp = function ()
     diagnostics = function()
         -- open float
         vim.keymap.set('n', '<space>e', function()
@@ -75,7 +69,7 @@ M.opts.use.lsp = function ()
     diagnostics()
 end
 
-M.opts.use.jdtls = function ()
+M.jdtls = function ()
     local lsp = require('jdtls')
 
     vim.keymap.set('n', '<A-o>', function() lsp.organize_imports() end, opts)
@@ -86,7 +80,7 @@ M.opts.use.jdtls = function ()
     --vim.keymap.set('v', '<Leader>crm', lsp.extract_method(true), opts)
 end
 
-M.opts.use.telescope = function ()
+M.telescope = function ()
     local api = require('telescope.builtin')
 
     -- grep string you type in
@@ -125,7 +119,7 @@ M.opts.use.telescope = function ()
     vim.keymap.set({ 'n', 'v' }, '<Leader>gb', function() api.git_branches() end, opts)
 end
 
-M.opts.use.nvim_tree = function ()
+M.nvim_tree = function ()
     local api = require('nvim-tree.api')
 
     vim.keymap.set({ 'n', 'v' }, '<C-n>', function() api.tree.toggle() end, opts)
@@ -140,7 +134,7 @@ M.opts.use.nvim_tree = function ()
     end, opts)
 end
 
-M.opts.use.trouble = function ()
+M.trouble = function ()
     local api = require('trouble')
 
     vim.keymap.set({ 'n', 'v' }, '<Leader>xx', function() api.open() end)
@@ -151,26 +145,12 @@ M.opts.use.trouble = function ()
     vim.keymap.set({ 'n', 'v' }, 'gR', function() api.open('lsp_references') end)
 end
 
-M.opts.use.projects = function ()
+M.projects = function ()
     --local api = require('projects_nvim')
     local tel = require('telescope')
 
 
     vim.keymap.set({ 'n', 'v' }, '<Leader>r', function() tel.extensions.projects.projects({}) end)
-end
-
-function M.setup(opts)
-    vim.tbl_deep_extend(
-        'force',
-        M.opts,
-        opts or {}
-    )
-
-    for _, v in pairs(M.opts.use) do
-        if pcall(v) then
-            v()
-        end
-    end
 end
 
 return M
