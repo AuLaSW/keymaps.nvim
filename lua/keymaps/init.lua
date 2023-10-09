@@ -145,7 +145,7 @@ M.trouble = function ()
     vim.keymap.set({ 'n', 'v' }, 'gR', function() api.open('lsp_references') end)
 end
 
-M.projects = function ()
+M.project = function ()
     --local api = require('projects_nvim')
     local tel = require('telescope')
 
