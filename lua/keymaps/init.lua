@@ -14,7 +14,8 @@ M.qol = function ()
 
     -- for regenerating a sheet
     vim.keymap.set('n', '<Leader>pg', 'V{gq', opts)
-    vim.keymap.set('n', '<Leader>pG', 'V}gq<C-O>', opts)
+    vim.keymap.set('n', '<Leader>pG', 'V}gq', opts)
+    vim.keymap.set('n', '<Leader>pp', '{V}gq', opts)
 end
 
 M.lsp = function ()
