@@ -1,4 +1,4 @@
-local M = {}
+local M = {} 
 
 local opts = { silent = true, noremap = true }
 
@@ -151,6 +151,43 @@ M.project = function ()
 
 
     vim.keymap.set({ 'n', 'v' }, '<Leader>r', function() tel.extensions.projects.projects({}) end)
+end
+
+M.autocommit = function ()
+    local ac = require('autocommit')
+
+    vim.keymap.set('n', '<Leader>ac', function() ac.hook() end)
+end
+
+M.highlight = function ()
+    local hl = require('highlight')
+    local pos = require('highlight.utils.position')
+
+    vim.keymap.set('v', '<Leader>hl', function()
+        local buf = vim.api.nvim_get_current_buf()
+        local start = vim.api.nvim_buf_get_mark(buf, "<")
+        local stop = vim.api.nvim_buf_get_mark(buf, ">")
+        print("Start: "..start[1], start[2])
+        print("Stop: "..stop[1], stop[2])
+
+        local pos_1 = pos.wrapPosition(
+            start[1],
+            start[2],
+            pos.INDEX_TYPES.row
+        )
+
+        local pos_2 = pos.wrapPosition(
+            stop[1],
+            stop[2],
+            pos.INDEX_TYPES.row
+        )
+
+        hl.set_hl(
+            pos_1,
+            pos_2,
+            {}
+        )
+    end, opts)
 end
 
 return M
