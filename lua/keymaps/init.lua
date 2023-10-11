@@ -2,7 +2,7 @@ local M = {}
 
 local opts = { silent = true, noremap = true }
 
-vim.opt.timeoutlen = 200
+vim.opt.timeoutlen = 600
 
 M.leader = function ()
     vim.g.mapleader = ','
